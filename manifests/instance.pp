@@ -168,13 +168,12 @@ define elasticsearch::instance(
       $main_config = { }
     }
 
-    $instance_datadir_config = { 'path.data' => $instance_datadir }
     if(is_array($instance_datadir)) {
       $dirs = join($instance_datadir, ' ')
-      $path_dirs = join($instance_datadir,',')
-      $instance_datadir_config = { 'path.data' => $path_dirs }
+      $instance_datadir_config = { 'path.data' => join($instance_datadir,',') }
     } else {
       $dirs = $instance_datadir
+      $instance_datadir_config = { 'path.data' => $instance_datadir }
     }
 
     exec { "mkdir_datadir_elasticsearch_${name}":
